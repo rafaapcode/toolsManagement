@@ -1,5 +1,5 @@
 import Router from 'express';
-import { ToolsControler } from '../controllers/ToolsControllers.js';
+import ToolsControler from '../controllers/ToolsControllers.js';
 
 const toolRouter = new Router();
 

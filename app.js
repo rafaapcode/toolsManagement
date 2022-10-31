@@ -1,5 +1,9 @@
 import express from 'express';
 import toolRouter from './src/routes/ToolsRoutes';
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 class App {
     constructor() {
@@ -20,7 +24,7 @@ class App {
     }
 
     database() {
-
+        mongoose.connect(process.env.DATABASE_URL);
     }
 }
 
