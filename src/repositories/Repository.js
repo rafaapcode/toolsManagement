@@ -2,28 +2,62 @@ import modelTools from '../models/ToolModel';
 
 export class Tools {
     static async storage(body) {
-        const newTools = await modelTools.create(body);
+        try {
+            const newTools = await modelTools.create(body);
 
-        return newTools;
+            return newTools;
+        } catch (e) {
+            const error = new Error(e.message);
+            e.inner = e;
+
+            throw error;
+        }
     }
 
     static async getAll() {
-        const tools = await modelTools.find();
+        try {
+            const tools = await modelTools.find();
 
-        const toolsFiltered = tools.map(({ id, tags, title, description, link }) => {
-            return { id, title, link, description, tags };
-        })
+            const toolsFiltered = tools.map(({ id, tags, title, description, link }) => {
+                return { id, title, link, description, tags };
+            })
 
-        return toolsFiltered;
+            return toolsFiltered;
+        } catch (e) {
+            const error = new Error(e.message);
+            e.inner = e;
+
+            throw error;
+        }
     }
 
     static async get(tag) {
-        const tool = await modelTools.findOne({ tags: { $all: [tag] } });
+        try {
+            const tool = await modelTools.findOne({ tags: { $all: [tag] } });
 
-        return tool;
+            return tool;
+
+        } catch (e) {
+
+            const error = new Error(e.message);
+            e.inner = e;
+
+            throw error;
+
+        }
     }
 
     static async delete(id) {
-        await modelTools.findByIdAndDelete(id);
+        try {
+
+            await modelTools.findByIdAndDelete(id);
+
+        } catch (e) {
+
+            const error = new Error(e.message);
+            e.inner = e;
+
+            throw error;
+        }
     }
 }
