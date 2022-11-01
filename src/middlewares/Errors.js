@@ -1,4 +1,5 @@
 import { Tools } from '../repositories/Repository';
+import ValidationsTool from '../utils/ValidationTool';
 
 export class ErrorsTools {
 
@@ -19,14 +20,10 @@ export class ErrorsTools {
 
     static async storageErrorgHandling(req, res, next) {
 
-        if (!req.body.title) {
-            return res.status(400).json({ message: 'Mande um título válido' });
-        } else if (!req.body.link) {
-            return res.status(400).json({ message: 'Mande um link válido' });
-        } else if (!req.body.description) {
-            return res.status(400).json({ message: 'Mande uma descrição válida' });
-        } else if (!req.body.tags.length) {
-            return res.status(400).json({ message: 'Sua ferramenta deve ter pelo menos 1 TAG !' });
+        const { error } = ValidationsTool.storageValidation(req.body);
+
+        if (error) {
+            return res.status(400).json({ message: 'Dados faltando ou incorretos.' });
         }
 
         const { title, link, description, tags } = req.body;
@@ -58,6 +55,12 @@ export class ErrorsTools {
         try {
             const { id } = req.params;
             const { tags } = req.body;
+
+            const { error } = ValidationsTool.tagValidation(tags);
+
+            if (error) {
+                return res.status(400).json({ message: 'Dados incorretos' });
+            }
 
             const tool = await Tools.getOneTool(id);
 

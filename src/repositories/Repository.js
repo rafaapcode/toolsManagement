@@ -19,7 +19,7 @@ export class Tools {
             const tools = await modelTools.find();
 
             const toolsFiltered = tools.map(({ id, tags, title, description, link }) => {
-                return { id, title, link, description, tags };
+                return { id, title, link, description, tags, link };
             })
 
             return toolsFiltered;
