@@ -1,4 +1,5 @@
 import modelTools from '../models/ToolModel';
+import modelUsers from '../models/UserModel';
 
 export class Tools {
     static async storage(body) {
@@ -91,4 +92,10 @@ export class Tools {
         }
     }
 
+}
+
+export class User{
+    static storage(body){
+        
+    }
 }

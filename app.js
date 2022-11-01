@@ -1,5 +1,6 @@
 import express from 'express';
 import toolRouter from './src/routes/ToolsRoutes';
+import userRouter from './src/routes/UsersRoutes';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 
@@ -20,7 +21,8 @@ class App {
     }
 
     routes() {
-        this.app.use('/tools', toolRouter)
+        this.app.use('/tools', toolRouter);
+        this.app.use('/users', userRouter)
     }
 
     database() {
