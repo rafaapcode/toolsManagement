@@ -27,5 +27,4 @@ class App {
         mongoose.connect(process.env.DATABASE_URL);
     }
 }
-
 export default new App().app;
