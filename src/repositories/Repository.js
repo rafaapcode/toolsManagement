@@ -60,4 +60,21 @@ export class Tools {
             throw error;
         }
     }
+
+    static async getOneTool(id) {
+        try {
+
+            const tool = await modelTools.findById(id);
+
+            return tool;
+            
+        } catch (e) {
+
+            const error = new Error(e.message);
+            e.inner = e;
+
+            throw error;
+        }
+    }
+
 }

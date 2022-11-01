@@ -4,7 +4,7 @@ export default class ToolsControler {
     static async storage(req, res) {
         const newTool = await Tools.storage(req.body);
 
-        res.json(newTool)
+        res.status(201).json(newTool)
     }
 
     static async getAll(req, res) {
@@ -18,7 +18,8 @@ export default class ToolsControler {
 
         const tool = await Tools.get(tag);
 
-        res.json(tool);
+        res.header('Content-Type', 'application/json');
+        return res.json(tool);
     }
 
     static async delete(req, res) {
