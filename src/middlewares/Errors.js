@@ -79,5 +79,4 @@ export class ErrorsTools {
             return res.status(404).json({ message: 'Ferramenta não encontrada .' })
         }
     }
-
 } 
