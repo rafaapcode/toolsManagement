@@ -162,7 +162,7 @@ Exemplo :
 ```
 
 
-### PUT /tools/:id
+### PUT /tools/addTag/:id
 Esta rota adiciona uma tag à ferramenta relacionada com o ID.
 #### Parametros
 id: ID da ferramenta que se deseja excluir.
@@ -171,7 +171,7 @@ tags: Array de tags que deseja adicionar.
 
 Exemplo:
 ```
-    http://localhost:3000/tools/63614fa23d8d5c3d2f906a58
+    http://localhost:3000/tools/addTag/63614fa23d8d5c3d2f906a58
 
     {
 	    "tags": ["REACT"]

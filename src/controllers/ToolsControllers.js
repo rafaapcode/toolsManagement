@@ -16,7 +16,7 @@ export default class ToolsControler {
                 ref: "delete_tool"
             },
             {
-                href: `http://localhost:3000/tools/${newTool.id}`,
+                href: `http://localhost:3000/tools/addTag/${newTool.id}`,
                 method: "PUT",
                 ref: "add_tag_to_tool"
             },
@@ -61,7 +61,7 @@ export default class ToolsControler {
                 ref: "create_tool"
             },
             {
-                href: `http://localhost:3000/tools/${tool.id}`,
+                href: `http://localhost:3000/tools/addTag/${tool.id}`,
                 method: "PUT",
                 ref: "add_tag_to_tool"
             },
@@ -98,6 +98,32 @@ export default class ToolsControler {
     }
 
     static async updatedTags(req, res) {
+        const { id } = req.params;
+        const { tags: newTags } = req.body;
+
+        const tool = await Tools.getOneTool(id);
+
+        const newBody = [...tool.tags, ...newTags];
+
+        await Tools.updatedTool(id, newBody);
+
+        const hateoas = [
+            {
+                href: "http://localhost:3000/tools/tag",
+                method: "GET",
+                ref: "get_tool_for_tag"
+            },
+            {
+                href: `http://localhost:3000/tools`,
+                method: "GET",
+                ref: "get_tools"
+            }
+        ]
+
+        res.json({ message: 'Tags adicionadas' });
+    }
+
+    static async deleteTags(req, res) {
         const { id } = req.params;
         const { tags: newTags } = req.body;
 
