@@ -67,7 +67,21 @@ export class Tools {
             const tool = await modelTools.findById(id);
 
             return tool;
-            
+
+        } catch (e) {
+
+            const error = new Error(e.message);
+            e.inner = e;
+
+            throw error;
+        }
+    }
+
+    static async updatedTool(id, body) {
+        try {
+
+            await modelTools.findOneAndUpdate({ id }, { tags: body }, {new: true});
+
         } catch (e) {
 
             const error = new Error(e.message);

@@ -9,7 +9,7 @@ export class ErrorsTools {
 
         if (!tool) {
             return res.status(404).json({
-                message: 'Tool not exists !!',
+                message: 'Ferramenta não existe.',
             });
         }
 
@@ -44,13 +44,36 @@ export class ErrorsTools {
 
             if (!tool) {
                 return res.status(404).json({
-                    message: 'Tool not exists !!'
+                    message: 'Ferramenta não existe.'
                 });
             }
 
             next();
         } catch (error) {
-            return res.status(404).json({message: 'Ferramenta não encontrada .'})
+            return res.status(404).json({ message: 'Ferramenta não encontrada .' })
+        }
+    }
+
+    static async updateErrorgHandling(req, res, next) {
+        try {
+            const { id } = req.params;
+            const { tags } = req.body;
+
+            const tool = await Tools.getOneTool(id);
+
+            if (!tool) {
+                return res.status(404).json({
+                    message: 'Ferramenta não encontrada.'
+                });
+            }
+
+            if (!tags[0]) {
+                return res.status(400).json({ message: 'Envie algum conteúdo para atualizar a ferramenta.' });
+            }
+
+            next();
+        } catch (error) {
+            return res.status(404).json({ message: 'Ferramenta não encontrada .' })
         }
     }
 

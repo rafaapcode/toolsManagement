@@ -28,6 +28,19 @@ export default class ToolsControler {
         await Tools.delete(id);
 
 
-        res.json({ message: "Deleted with success !!" });
+        res.json({ message: "Ferramenta deletada com sucesso !" });
+    }
+
+    static async updatedTags(req, res) {
+        const { id } = req.params;
+        const { tags: newTags } = req.body;
+
+        const tool = await Tools.getOneTool(id);
+
+        const newBody = [...tool.tags, ...newTags];
+
+        await Tools.updatedTool(id, newBody);
+
+        res.json({ message: 'Tags adicionadas' });
     }
 }
