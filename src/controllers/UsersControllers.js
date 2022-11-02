@@ -1,5 +1,9 @@
 import { User } from '../repositories/Repository';
 import bcryptjs from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 export default class UserController {
     static async storage(req, res) {
@@ -37,5 +41,16 @@ export default class UserController {
         await User.delete(id);
 
         res.json({ message: 'Usuário deletado.' });
+    }
+
+    static async login(req, res) {
+        const { email } = req.body;
+
+        const token = jwt.sign({ email }, process.env.SECRET, {
+            expiresIn: '1d'
+        });
+
+        res.header('Authorization', `Bearer ${token}`);
+        res.json({ message: 'Usuário Logado' });
     }
 }

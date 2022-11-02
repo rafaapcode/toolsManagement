@@ -1,5 +1,6 @@
 import { Tools, User } from '../repositories/Repository';
 import { ValidationsTool, ValidationsUsers } from '../utils/ValidationTool';
+import bcryptjs from 'bcryptjs';
 
 export class ErrorsTools {
 
@@ -108,6 +109,22 @@ export class ErrorsUser {
 
         if (!user) {
             return res.status(404).json({ message: 'Usuário não existe' })
+        }
+
+        next();
+    }
+
+    static async loginHandling(req, res, next) {
+        const { email, password } = req.body;
+
+        const user = await User.getUserEmail(email);
+
+        if (!user) {
+            return res.status(404).json({ message: 'Usuário não encontrado.' });
+        }
+
+        if (!bcryptjs.compareSync(password, user.password)) {
+            return res.status(400).json({ message: 'Senha incorreta.' });
         }
 
         next();
