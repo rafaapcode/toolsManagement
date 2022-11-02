@@ -1,7 +1,7 @@
 import joi from 'joi';
 
-export default class ValidationsTool{
-    static storageValidation(data){
+export class ValidationsTool {
+    static storageValidation(data) {
         const storage = joi.object({
             title: joi.string().required(),
             link: joi.string().required(),
@@ -12,11 +12,22 @@ export default class ValidationsTool{
         return storage.validate(data);
     }
 
-    static tagValidation(tag){
+    static tagValidation(tag) {
         const tags = joi.object({
             tag: joi.array().required(),
         })
 
         return tags.validate(tag);
+    }
+}
+
+export class ValidationsUsers {
+    static storageValidation(data) {
+        const storage = joi.object({
+            email: joi.string().email().required(),
+            password: joi.string().min(4).max(12).required(),
+        });
+
+        return storage.validate(data);
     }
 }

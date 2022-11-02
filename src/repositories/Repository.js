@@ -1,5 +1,6 @@
 import modelTools from '../models/ToolModel';
 import modelUsers from '../models/UserModel';
+import bcryptjs from 'bcryptjs';
 
 export class Tools {
     static async storage(body) {
@@ -81,7 +82,7 @@ export class Tools {
     static async updatedTool(id, body) {
         try {
 
-            await modelTools.findOneAndUpdate({ id }, { tags: body }, {new: true});
+            await modelTools.findOneAndUpdate({ id }, { tags: body }, { new: true });
 
         } catch (e) {
 
@@ -94,8 +95,75 @@ export class Tools {
 
 }
 
-export class User{
-    static storage(body){
-        
+export class User {
+    static async storage(body) {
+        try {
+            let { email, password } = body;
+
+            const salt = bcryptjs.genSaltSync(8);
+            password = bcryptjs.hashSync(password, salt);
+
+            const { id, email: emailUser, password: pass } = await modelUsers.create({ email, password });
+
+            return { id, email: emailUser, password: pass };
+        } catch (e) {
+            const error = new Error(e.message);
+            e.inner = e;
+
+            throw error;
+        }
+    }
+
+    static async getUser(idUser) {
+        try {
+
+            const user = await modelUsers.findById(idUser);
+
+            return user;
+
+        } catch (e) {
+            const error = new Error(e.message);
+            e.inner = e;
+
+            throw error;
+        }
+    }
+
+    static async update(idUser, body) {
+        try {
+            const { id, email, password } = await modelUsers.findOneAndUpdate({ id: idUser }, body, { new: true });
+
+            return { id, email, password };
+        } catch (e) {
+            const error = new Error(e.message);
+            e.inner = e;
+
+            throw error;
+        }
+    }
+
+    static async delete(id) {
+        try {
+            await modelUsers.findByIdAndDelete(id);
+        } catch (e) {
+            const error = new Error(e.message);
+            e.inner = e;
+
+            throw error;
+        }
+    }
+
+    static async getUserEmail(email) {
+        try {
+            const user = await modelUsers.findOne({ email });
+
+            return user;
+        } catch (e) {
+            const error = new Error(e.message);
+            e.inner = e;
+
+            throw error;
+        }
+
     }
 }

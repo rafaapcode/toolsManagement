@@ -1,5 +1,5 @@
-import { Tools } from '../repositories/Repository';
-import ValidationsTool from '../utils/ValidationTool';
+import { Tools, User } from '../repositories/Repository';
+import { ValidationsTool, ValidationsUsers } from '../utils/ValidationTool';
 
 export class ErrorsTools {
 
@@ -79,4 +79,38 @@ export class ErrorsTools {
             return res.status(404).json({ message: 'Ferramenta não encontrada .' })
         }
     }
-} 
+}
+
+export class ErrorsUser {
+
+    static async storageUserHandling(req, res, next) {
+
+        const { email, password } = req.body;
+
+        const { error } = ValidationsUsers.storageValidation({ email, password });
+        if (error) {
+            return res.status(400).json({ message: 'Email ou Senha inválidos' });
+        }
+
+        const user = await User.getUserEmail(email);
+
+        if (user) {
+            return res.status(400).json({ message: 'Usuário ja existe.' });
+        }
+
+        next();
+    }
+
+    static async getDeleteUserHandling(req, res, next) {
+        const { id } = req.params;
+
+        const user = await User.getUser(id);
+
+        if (!user) {
+            return res.status(404).json({ message: 'Usuário não existe' })
+        }
+
+        next();
+    }
+
+}
