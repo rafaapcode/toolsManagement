@@ -2,6 +2,7 @@ import express from 'express';
 import toolRouter from './src/routes/ToolsRoutes';
 import userRouter from './src/routes/UsersRoutes';
 import mongoose from 'mongoose';
+import helmet from 'helmet';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -17,6 +18,7 @@ class App {
     middleware() {
         this.app.use(express.json());
         this.app.use(express.urlencoded({ extended: true }));
+        this.app.use(helmet());
         this.app.set('port', 3000);
     }
 
