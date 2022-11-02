@@ -105,7 +105,7 @@ export class ErrorsUser {
     static async getDeleteUserHandling(req, res, next) {
         const { id } = req.params;
 
-        const user = await User.getUser(id);
+        const user = await User.getUser(req.userId);
 
         if (!user) {
             return res.status(404).json({ message: 'Usuário não existe' })
