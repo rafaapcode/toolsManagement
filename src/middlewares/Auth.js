@@ -15,16 +15,16 @@ export default async function authUser(req, res, next) {
 
     const [, token] = authorization.split(' ');
 
-    const { email } = jwt.verify(token, process.env.SECRET);
+    try {
+        const { email } = jwt.verify(token, process.env.SECRET);
 
+        const { id } = await User.getUserEmail(email);
 
-    if (!email) {
-        return res.status(401).json({ message: 'Token inválido.' })
+        req.userId = id;
+
+        next();
+    } catch (error) {
+        return res.status(401).json({ message: 'Token inválido' })
     }
 
-    const { id } = await User.getUserEmail(email);
-
-    req.userId = id;
-
-    next();
 }

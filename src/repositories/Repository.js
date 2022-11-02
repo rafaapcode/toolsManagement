@@ -103,9 +103,9 @@ export class User {
             const salt = bcryptjs.genSaltSync(8);
             password = bcryptjs.hashSync(password, salt);
 
-            const { id, email: emailUser, password: pass } = await modelUsers.create({ email, password });
+            const { id, email: emailUser } = await modelUsers.create({ email, password });
 
-            return { id, email: emailUser, password: pass };
+            return { id, email: emailUser };
         } catch (e) {
             const error = new Error(e.message);
             e.inner = e;

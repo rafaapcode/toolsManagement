@@ -13,8 +13,7 @@ export default class UserController {
     }
 
     static async getUser(req, res) {
-        const { id } = req.params;
-        const user = await User.getUser(id);
+        const user = await User.getUser(req.userId);
 
         res.json(user);
     }
@@ -24,21 +23,14 @@ export default class UserController {
             const salt = bcryptjs.genSaltSync(8);
             req.body.password = bcryptjs.hashSync(req.body.password, salt);
         }
-
-        const { id } = req.params;
-
-        if (!(await User.getUser(id))) {
-            return res.status(400).json({ message: 'Usuário não existe.' })
-        }
-
-        const userUpdate = await User.update(id, req.body);
+     
+        const userUpdate = await User.update(req.userId, req.body);
 
         res.json(userUpdate);
     }
 
     static async delete(req, res) {
-        const { id } = req.params;
-        await User.delete(id);
+        await User.delete(req.userId);
 
         res.json({ message: 'Usuário deletado.' });
     }
