@@ -9,13 +9,55 @@ export default class UserController {
     static async storage(req, res) {
         const { id, email, password } = await User.storage(req.body);
 
-        res.status(201).json({ id, email, password });
+        const hateoas = [
+            {
+                href: "http://localhost:3000/users",
+                method: "GET",
+                ref: "get_user"
+            },
+            {
+                href: `http://localhost:3000/users`,
+                method: "PUT",
+                ref: "update_user"
+            },
+            {
+                href: `http://localhost:3000/users`,
+                method: "DELETE",
+                ref: "delete_user"
+            },
+            {
+                href: `http://localhost:3000/users/login`,
+                method: "DELETE",
+                ref: "login_user"
+            },
+        ];
+
+
+        res.status(201).json({ id, email, password, _link: hateoas });
     }
 
     static async getUser(req, res) {
         const user = await User.getUser(req.userId);
 
-        res.json(user);
+        const hateoas = [
+            {
+                href: "http://localhost:3000/users",
+                method: "POST",
+                ref: "create_user"
+            },
+            {
+                href: `http://localhost:3000/users`,
+                method: "PUT",
+                ref: "update_user"
+            },
+            {
+                href: `http://localhost:3000/users`,
+                method: "DELETE",
+                ref: "delete_user"
+            },
+        ];
+
+        res.json({ user, _link: hateoas });
     }
 
     static async update(req, res) {
@@ -23,16 +65,42 @@ export default class UserController {
             const salt = bcryptjs.genSaltSync(8);
             req.body.password = bcryptjs.hashSync(req.body.password, salt);
         }
-     
+
         const userUpdate = await User.update(req.userId, req.body);
 
-        res.json(userUpdate);
+        const hateoas = [
+            {
+                href: "http://localhost:3000/users",
+                method: "POST",
+                ref: "create_user"
+            },
+            {
+                href: `http://localhost:3000/users`,
+                method: "GET",
+                ref: "get_user"
+            },
+            {
+                href: `http://localhost:3000/users`,
+                method: "DELETE",
+                ref: "delete_user"
+            },
+        ];
+
+        res.json({ user: userUpdate, _link: hateoas });
     }
 
     static async delete(req, res) {
         await User.delete(req.userId);
 
-        res.json({ message: 'Usuário deletado.' });
+        const hateoas = [
+            {
+                href: "http://localhost:3000/users",
+                method: "POST",
+                ref: "create_user"
+            }
+        ];
+
+        res.json({ message: 'Usuário deletado.', _link: hateoas });
     }
 
     static async login(req, res) {
@@ -42,7 +110,30 @@ export default class UserController {
             expiresIn: '1d'
         });
 
+        const hateoas = [
+            {
+                href: "http://localhost:3000/users",
+                method: "GET",
+                ref: "get_user"
+            },
+            {
+                href: "http://localhost:3000/users",
+                method: "PUT",
+                ref: "update_user"
+            },
+            {
+                href: "http://localhost:3000/users",
+                method: "DELETE",
+                ref: "delete_user"
+            },
+            {
+                href: "http://localhost:3000/users",
+                method: "POST",
+                ref: "create_user"
+            }
+        ];
+
         res.header('Authorization', `Bearer ${token}`);
-        res.json({ message: 'Usuário Logado' });
+        res.json({ message: 'Usuário Logado', _link: hateoas });
     }
 }

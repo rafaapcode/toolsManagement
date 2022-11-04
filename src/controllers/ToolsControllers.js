@@ -20,7 +20,7 @@ export default class ToolsControler {
                 method: "PUT",
                 ref: "add_tag_to_tool"
             },
-        ]
+        ];
 
         res.status(201).json({ tool: newTool, _link: hateoas })
     }
