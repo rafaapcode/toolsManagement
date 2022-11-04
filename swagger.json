@@ -326,6 +326,273 @@
                     }
                 }
             }
+        },
+        "/tools": {
+            "post": {
+                "description": "Criação de ferramenta",
+                "tags": [
+                    "Tools"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "aplication/json": {
+                            "schema": {
+                                "properties": {
+                                    "title": {
+                                        "type": "string"
+                                    },
+                                    "link": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "tags": {
+                                        "type": "array"
+                                    }
+                                },
+                                "example": {
+                                    "title": "Knex",
+                                    "link": "http://knex.com",
+                                    "description": "Query Builder",
+                                    "tags": [
+                                        "NodeJs",
+                                        "SQL"
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Dados faltando ou incorretos."
+                    },
+                    "201": {
+                        "description": "Criação de ferramenta",
+                        "content": {
+                            "aplication/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "string"
+                                        },
+                                        "title": {
+                                            "type": "string"
+                                        },
+                                        "link": {
+                                            "type": "string"
+                                        },
+                                        "description": {
+                                            "type": "string"
+                                        },
+                                        "tags": {
+                                            "type": "array"
+                                        },
+                                        "_link": {
+                                            "type": "array"
+                                        }
+                                    },
+                                    "example": {
+                                        "title": "Knex",
+                                        "link": "http://knex.com",
+                                        "description": "Query Builder",
+                                        "tags": [
+                                            "NodeJs",
+                                            "SQL"
+                                        ],
+                                        "_link": [
+                                            {
+                                                "href": "http://localhost:3000/tools",
+                                                "method": "GET",
+                                                "ref": "get_all_tools"
+                                            },
+                                            {
+                                                "href": "http: //localhost:3000/tools/973joau013aoudh",
+                                                "method": "DELETE",
+                                                "ref": "delete_tool"
+                                            },
+                                            {
+                                                "href": "http: //localhost:3000/tools/addTag/973joau013aoudh",
+                                                "method": "PUT",
+                                                "ref": "add_tag_to_tool"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "description": "Busca todas as ferramentas",
+                "tags": [
+                    "Tools"
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Ferramenta não existe"
+                    },
+                    "200": {
+                        "description": "Retorna um array com todas as ferramentas",
+                        "content": {
+                            "aplication/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "string"
+                                        },
+                                        "title": {
+                                            "type": "string"
+                                        },
+                                        "link": {
+                                            "type": "string"
+                                        },
+                                        "description": {
+                                            "type": "string"
+                                        },
+                                        "tags": {
+                                            "type": "array"
+                                        },
+                                        "_link": {
+                                            "type": "array"
+                                        }
+                                    },
+                                    "example": {
+                                        "id": "12-90fbnoh1o1",
+                                        "title": "Knex",
+                                        "link": "http://knex.com",
+                                        "description": "Query Builder",
+                                        "tags": [
+                                            "SQL",
+                                            "NodeJs"
+                                        ],
+                                        "_link": [
+                                            {
+                                                "href": "http://localhost:3000/tools",
+                                                "method": "POST",
+                                                "ref": "create_tool"
+                                            },
+                                            {
+                                                "href": "http://localhost:3000/tools/tag",
+                                                "method": "GET",
+                                                "ref": "get_tool_for_tag"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/tools/{tag}": {
+            "get": {
+                "description": "Busca ferramentas especificadas pela TAG",
+                "tags": [
+                    "Tools"
+                ],
+                "parameters": [
+                    {
+                        "name": "tag",
+                        "in": "query",
+                        "description": "A tag que será usada com referência para buscar a ferramenta",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Ferramenta não existe"
+                    },
+                    "200": {
+                        "description": "Retorna um array com todas as ferramentas que tenham a tag especificada",
+                        "content": {
+                            "aplication/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "string"
+                                        },
+                                        "title": {
+                                            "type": "string"
+                                        },
+                                        "link": {
+                                            "type": "string"
+                                        },
+                                        "description": {
+                                            "type": "string"
+                                        },
+                                        "tags": {
+                                            "type": "array"
+                                        },
+                                        "_link": {
+                                            "type": "array"
+                                        }
+                                    },
+                                    "example": {
+                                        "id": "12-90fbnoh1o1",
+                                        "title": "Knex",
+                                        "link": "http://knex.com",
+                                        "description": "Query Builder",
+                                        "tags": [
+                                            "SQL",
+                                            "NodeJs"
+                                        ],
+                                        "_link": [
+                                            {
+                                                "href": "http://localhost:3000/tools",
+                                                "method": "GET",
+                                                "ref": "get_all_tools"
+                                            },
+                                            {
+                                                "href": "http: //localhost:3000/tools",
+                                                "method": "POST",
+                                                "ref": "create_tool"
+                                            },
+                                            {
+                                                "href": "http: //localhost:3000/tools/addTag/knoopa01823bd",
+                                                "method": "PUT",
+                                                "ref": "add_tag_to_tool"
+                                            },
+                                            {
+                                                "href": "http: //localhost:3000/tools/knoopa01823bd",
+                                                "method": "DELETE",
+                                                "ref": "delete_tool"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/tools/{id}": {
+            "delete": {
+                "description": "Remove uma ferramenta pelo seu ID",
+                "tags": [
+                    "Tools"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "O id que será usado para excluir a ferramenta",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    
+                }
+            }
         }
     }
 }

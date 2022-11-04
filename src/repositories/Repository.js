@@ -35,7 +35,7 @@ export class Tools {
 
     static async get(tag) {
         try {
-            const tool = await modelTools.findOne({ tags: { $all: [tag] } });
+            const tool = await modelTools.find({ tags: { $all: [tag] } });
 
             return tool;
 
