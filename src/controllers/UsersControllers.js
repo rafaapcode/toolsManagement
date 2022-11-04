@@ -57,7 +57,7 @@ export default class UserController {
             },
         ];
 
-        res.json({ user, _link: hateoas });
+        res.json({ email: user.email, id: user.id, _link: hateoas });
     }
 
     static async update(req, res) {
@@ -86,7 +86,7 @@ export default class UserController {
             },
         ];
 
-        res.json({ user: userUpdate, _link: hateoas });
+        res.json({ id: userUpdate.id, email: userUpdate.email, _link: hateoas });
     }
 
     static async delete(req, res) {

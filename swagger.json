@@ -1,0 +1,331 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "TOOLS",
+        "description": "Magement of tools",
+        "version": "1.0.0"
+    },
+    "basePath": "/",
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "schema": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+    },
+    "paths": {
+        "/users": {
+            "get": {
+                "description": "Busca de usuário",
+                "tags": [
+                    "Users"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Credenciais inválidas"
+                    },
+                    "401": {
+                        "description": "Token inválido"
+                    },
+                    "200": {
+                        "description": "Usuário criado",
+                        "content": {
+                            "aplication/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "string"
+                                        },
+                                        "email": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "example": {
+                                        "id": "ajodbno1eo131",
+                                        "email": "este@gmail.com"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Criação de usuário",
+                "tags": [
+                    "Users"
+                ],
+                "requestBody": {
+                    "content": {
+                        "aplication/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                },
+                                "example": {
+                                    "email": "teste@gmail.com",
+                                    "password": "12345565"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Email ou senha inválidos / Usuário já existe"
+                    },
+                    "201": {
+                        "description": "Usuário criado",
+                        "content": {
+                            "aplication/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "email": {
+                                            "type": "string"
+                                        },
+                                        "password": {
+                                            "type": "string"
+                                        },
+                                        "_link": {
+                                            "type": "array"
+                                        }
+                                    },
+                                    "example": {
+                                        "email": "teste@gmail.com",
+                                        "password": "12345565",
+                                        "_link": [
+                                            {
+                                                "href": "http://localhost:3000/users",
+                                                "method": "POST",
+                                                "ref": "create_user"
+                                            },
+                                            {
+                                                "href": "http://localhost:3000/users",
+                                                "method": "PUT",
+                                                "ref": "update_user"
+                                            },
+                                            {
+                                                "href": "http://localhost:3000/users",
+                                                "method": "DELETE",
+                                                "ref": "delete_user"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Atualização de usuário",
+                "tags": [
+                    "Users"
+                ],
+                "requestBody": {
+                    "content": {
+                        "aplication/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                },
+                                "example": {
+                                    "email": "novoEmaiç@example.com",
+                                    "password": "newpass"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Usuário atualizado",
+                        "content": {
+                            "aplication/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "string"
+                                        },
+                                        "email": {
+                                            "type": "string"
+                                        },
+                                        "_link": {
+                                            "type": "array"
+                                        }
+                                    },
+                                    "example": {
+                                        "email": "novoEmaiç@example.com",
+                                        "password": "newpass",
+                                        "_link": [
+                                            {
+                                                "href": "http://localhost:3000/users",
+                                                "method": "POST",
+                                                "ref": "create_user"
+                                            },
+                                            {
+                                                "href": "http://localhost:3000/users",
+                                                "method": "GET",
+                                                "ref": "get_user"
+                                            },
+                                            {
+                                                "href": "http://localhost:3000/users",
+                                                "method": "DELETE",
+                                                "ref": "delete_user"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Deleção de usuário",
+                "tags": [
+                    "Users"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Deleção de usuário",
+                        "content": {
+                            "aplication/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "example": {
+                                        "message": "Usuário deletado com sucesso",
+                                        "_link": [
+                                            {
+                                                "href": "http://localhost:3000/users",
+                                                "method": "POST",
+                                                "ref": "create_user"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/login": {
+            "post": {
+                "description": "Logando o usuário",
+                "tags": [
+                    "Users"
+                ],
+                "requestBody": {
+                    "content": {
+                        "aplication/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                },
+                                "example": {
+                                    "email": "teste@gmail.com",
+                                    "password": "12345565"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Senha incorreta"
+                    },
+                    "404": {
+                        "description": "Usuário não encontrado"
+                    },
+                    "200": {
+                        "description": "Usuário criado",
+                        "content": {
+                            "aplication/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "_link": {
+                                            "type": "array"
+                                        }
+                                    },
+                                    "example": {
+                                        "message": "Usuário logado",
+                                        "_link": [
+                                            {
+                                                "href": "http://localhost:3000/users",
+                                                "method": "GET",
+                                                "ref": "get_user"
+                                            },
+                                            {
+                                                "href": "http://localhost:3000/users",
+                                                "method": "PUT",
+                                                "ref": "update_user"
+                                            },
+                                            {
+                                                "href": "http://localhost:3000/users",
+                                                "method": "DELETE",
+                                                "ref": "delete_user"
+                                            },
+                                            {
+                                                "href": "http://localhost:3000/users",
+                                                "method": "POST",
+                                                "ref": "create_user"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

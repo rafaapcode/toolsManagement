@@ -3,6 +3,8 @@ import toolRouter from './src/routes/ToolsRoutes';
 import userRouter from './src/routes/UsersRoutes';
 import mongoose from 'mongoose';
 import helmet from 'helmet';
+import expressUi from 'swagger-ui-express';
+import swaggerOptions from './swagger.json';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -24,7 +26,8 @@ class App {
 
     routes() {
         this.app.use('/tools', toolRouter);
-        this.app.use('/users', userRouter)
+        this.app.use('/users', userRouter);
+        this.app.use('/docs', expressUi.serve, expressUi.setup(swaggerOptions));
     }
 
     database() {

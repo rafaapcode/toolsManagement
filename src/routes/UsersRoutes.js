@@ -6,9 +6,9 @@ import auth from '../middlewares/Auth.js';
 const userRouter = new Router();
 
 userRouter.post('/', ErrorsUser.storageUserHandling, UserController.storage);
-userRouter.get('/', auth, ErrorsUser.getDeleteUserHandling, UserController.getUser);
+userRouter.get('/', auth, UserController.getUser);
 userRouter.put('/', auth, UserController.update);
-userRouter.delete('/', auth, ErrorsUser.getDeleteUserHandling, UserController.delete);
+userRouter.delete('/', auth, UserController.delete);
 userRouter.post('/login', ErrorsUser.loginHandling, UserController.login);
 
 export default userRouter;

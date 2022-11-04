@@ -10,7 +10,7 @@ export default async function authUser(req, res, next) {
     const { authorization } = req.headers;
 
     if (!authorization) {
-        return res.status(401).json({ message: 'Credenciais inválidas.' });
+        return res.status(400).json({ message: 'Credenciais inválidas.' });
     }
 
     const [, token] = authorization.split(' ');
