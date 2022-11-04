@@ -34,24 +34,6 @@ export class ErrorsTools {
         next();
     }
 
-    static async deleteErrorgHandling(req, res, next) {
-        try {
-            const { id } = req.params;
-
-            const tool = await Tools.getOneTool(id);
-
-            if (!tool) {
-                return res.status(404).json({
-                    message: 'Ferramenta não existe.'
-                });
-            }
-
-            next();
-        } catch (error) {
-            return res.status(404).json({ message: 'Ferramenta não encontrada .' })
-        }
-    }
-
     static async updateErrorgHandling(req, res, next) {
         try {
             const { id } = req.params;

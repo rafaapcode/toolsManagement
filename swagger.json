@@ -581,6 +581,11 @@
                 "tags": [
                     "Tools"
                 ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
                 "parameters": [
                     {
                         "name": "id",
@@ -590,7 +595,117 @@
                     }
                 ],
                 "responses": {
-                    
+                    "200": {
+                        "description": "Ferramenta deletada",
+                        "content": {
+                            "aplication/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "_link": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "example": {
+                                        "message": "Ferramenta deletada com sucesso !",
+                                        "_link": [
+                                            {
+                                                "href": "http://localhost:3000/tools",
+                                                "method": "POST",
+                                                "ref": "create_tool"
+                                            },
+                                            {
+                                                "href": "http: //localhost:3000/tools",
+                                                "method": "GET",
+                                                "ref": "get_tools"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/tools/addTag/{id}": {
+            "put": {
+                "description": "Adiciona uma TAG para uma ferramenta",
+                "tags": [
+                    "Tools"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "A tag será adicionada a uma ferramenta",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "aplication/json": {
+                            "schema": {
+                                "properties": {
+                                    "tags": {
+                                        "type": "array"
+                                    }
+                                },
+                                "example": {
+                                    "tags": [
+                                        "Mysql"
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Dados incorretos"
+                    },
+                    "404": {
+                        "description": "Ferramenta não encontrada"
+                    },
+                    "200": {
+                        "description": "Tags adicionadas",
+                        "content": {
+                            "aplication/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "_link": {
+                                            "type": "array"
+                                        }
+                                    },
+                                    "example": {
+                                        "message": "Tags adicionadas com sucesso",
+                                        "_link": [
+                                            {
+                                                "href": "http://localhost:3000/tools/tag",
+                                                "method": "GET",
+                                                "ref": "get_tool_for_tag"
+                                            },
+                                            {
+                                                "href": "http: //localhost:3000/tools",
+                                                "method": "GET",
+                                                "ref": "get_tools"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
