@@ -164,6 +164,12 @@
                     }
                 ],
                 "responses": {
+                    "400": {
+                        "description": "Credenciais inválidas"
+                    },
+                    "401": {
+                        "description": "Token inválido"
+                    },
                     "200": {
                         "description": "Usuário atualizado",
                         "content": {
@@ -219,6 +225,12 @@
                     }
                 ],
                 "responses": {
+                    "400": {
+                        "description": "Credenciais inválidas"
+                    },
+                    "401": {
+                        "description": "Token inválido"
+                    },
                     "200": {
                         "description": "Deleção de usuário",
                         "content": {
@@ -372,6 +384,9 @@
                 "responses": {
                     "400": {
                         "description": "Dados faltando ou incorretos."
+                    },
+                    "401": {
+                        "description": "Token inválido"
                     },
                     "201": {
                         "description": "Criação de ferramenta",
@@ -595,6 +610,12 @@
                     }
                 ],
                 "responses": {
+                    "400": {
+                        "description": "Credenciais inválidas"
+                    },
+                    "401": {
+                        "description": "Token inválido"
+                    },
                     "200": {
                         "description": "Ferramenta deletada",
                         "content": {
@@ -670,6 +691,9 @@
                 "responses": {
                     "400": {
                         "description": "Dados incorretos"
+                    },
+                    "401": {
+                        "description": "Token inválido"
                     },
                     "404": {
                         "description": "Ferramenta não encontrada"
