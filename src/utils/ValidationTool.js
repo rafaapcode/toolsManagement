@@ -11,14 +11,6 @@ export class ValidationsTool {
 
         return storage.validate(data);
     }
-
-    static tagValidation(tag) {
-        const tags = joi.object({
-            tag: joi.array().required(),
-        })
-
-        return tags.validate(tag);
-    }
 }
 
 export class ValidationsUsers {

@@ -39,12 +39,6 @@ export class ErrorsTools {
             const { id } = req.params;
             const { tags } = req.body;
 
-            const { error } = ValidationsTool.tagValidation(tags);
-
-            if (error) {
-                return res.status(400).json({ message: 'Dados incorretos' });
-            }
-
             const tool = await Tools.getOneTool(id);
 
             if (!tool) {
