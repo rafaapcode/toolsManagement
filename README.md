@@ -1,7 +1,5 @@
 # Tools Management
 
-
-- Estou testando algo
 - Uma API com o objetivo de fazer o gerenciamento de ferramentas.
 - Este desafio foi pego de um processo seletivo , e foi resolvido com o intuito de praticar solidificar os conhecimentos na área de Back-End.
 
